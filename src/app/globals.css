@@ -28,4 +28,47 @@ body {
   scrollbar-width: thin; /* Adjust the width as needed */
   scrollbar-color: #888 #0d0d1a; /* Thumb and track colors */
 }
+body, html {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
 
+.app-container {
+  /* height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden; */
+  transition: background-color 1s ease;
+}
+
+.day-mode {
+  background-color: white;
+}
+
+.night-mode {
+  background-color: black;
+}
+
+.app-container::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: -1;
+  transition: all 1s ease;
+}
+
+.night-mode::after {
+  top: 0;
+}
+
+.day-mode::after {
+  top: 100%;
+}

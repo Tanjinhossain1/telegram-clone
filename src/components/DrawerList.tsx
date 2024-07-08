@@ -37,9 +37,10 @@ export default function DrawerList({ anchor }: { anchor: "left" }) {
   };
   return (
     <Box
+    className={`app-container ${themeMode !== "light" ? 'night-mode' : 'day-mode'}`} 
       sx={{
         width: 280,
-        backgroundColor: themeMode === "light" ? "white" : "#06061f",
+        // backgroundColor: themeMode === "light" ? "white" : "#06061f",
         color: themeMode === "light" ? "black" : "white",
         height: "100%",
       }}
