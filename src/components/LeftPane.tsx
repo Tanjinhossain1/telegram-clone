@@ -10,11 +10,12 @@ import {
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useContext, useEffect, useRef, useState } from "react";
 import DrawerList from "./DrawerList";
 import SearchField from "./SearchField";
 import axios from "axios";
 import { formatTime } from "@/utils/DateFormator";
+import { ThemeContext } from "./ThemeContext";
 
 export default function LeftPaneComponent({
   chatId,
@@ -29,6 +30,8 @@ export default function LeftPaneComponent({
   pageRef.current = page;
   const [hasMore, setHasMore] = useState(true);
   const observerTarget = useRef(null);
+
+  const { themeMode } = useContext(ThemeContext);
 
   const [state, setState] = React.useState({
     top: false,
@@ -149,7 +152,7 @@ export default function LeftPaneComponent({
             aria-label="menu"
             sx={{ mr: 2, color: "white", mt: 1 }}
           >
-            <MenuIcon />
+            <MenuIcon sx={{color: themeMode === "light" ? "black" : "white"}} />
           </IconButton>
           <div
             style={{

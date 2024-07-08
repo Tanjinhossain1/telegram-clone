@@ -28,8 +28,8 @@ import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import { formatDay, formatTime } from "@/utils/DateFormator";
 import CheckIcon from "@mui/icons-material/Check";
 import Link from "next/link";
-import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ExpandCircleDownIcon from "@mui/icons-material/ExpandCircleDown";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const parseMessage = (message: any) => {
   const urlRegex =
@@ -55,10 +55,10 @@ const parseMessage = (message: any) => {
 export default function RightPaneComponent({
   chatId,
   isMobile,
-  setChatId
+  setChatId,
 }: {
   chatId: number | null;
-  setChatId:any;
+  setChatId: any;
   isMobile?: boolean;
 }) {
   const [chatDetail, setChatDetail] = useState<any[]>([]);
@@ -67,6 +67,8 @@ export default function RightPaneComponent({
   const [topDate, setTopDate] = useState<string | null>(null);
   const chatContainerRef = useRef(null);
   const dateRefs = useRef<any[]>([]);
+
+  const { themeMode } = useContext(ThemeContext);
 
   const layoutCSS = {
     height: "100%",
@@ -100,11 +102,11 @@ export default function RightPaneComponent({
     }
   }, [chatDetail]);
 
-  
   useEffect(() => {
     const handleScroll = () => {
       if (chatContainerRef.current) {
-        const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
+        const { scrollTop, scrollHeight, clientHeight } =
+          chatContainerRef.current;
         if (scrollTop < scrollHeight - clientHeight - 50) {
           setShowScrollIcon(true);
         } else {
@@ -125,7 +127,7 @@ export default function RightPaneComponent({
     );
 
     if (chatContainerRef.current) {
-      chatContainerRef.current.addEventListener("scroll", handleScroll);
+      (chatContainerRef.current as any)?.addEventListener("scroll", handleScroll);
     }
 
     dateRefs.current.forEach((ref) => {
@@ -134,7 +136,7 @@ export default function RightPaneComponent({
 
     return () => {
       if (chatContainerRef.current) {
-        chatContainerRef.current.removeEventListener("scroll", handleScroll);
+        (chatContainerRef.current as any)?.removeEventListener("scroll", handleScroll);
       }
 
       dateRefs.current.forEach((ref) => {
@@ -145,13 +147,12 @@ export default function RightPaneComponent({
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTo({
-        top: chatContainerRef.current.scrollHeight,
-        behavior: 'smooth'
+        (chatContainerRef.current as any)?.scrollTo({
+        top:  (chatContainerRef.current as any)?.scrollHeight,
+        behavior: "smooth",
       });
     }
   };
-
 
   let prevDate: string;
   console.log("chatId  ", chatId, chatDetail);
@@ -159,11 +160,12 @@ export default function RightPaneComponent({
     <div
       style={{
         ...layoutCSS,
-        background: "#06061f",
+        background: themeMode === "light" ? "white" : "#06061f",
+        color: themeMode === "light" ? "black" : "white",
         overflowY: "auto",
         height: "100%",
         position: "relative",
-        marginTop: isMobile ? "70px" : ""
+        marginTop: isMobile ? "70px" : "",
         // bottom:0
       }}
     >
@@ -186,39 +188,54 @@ export default function RightPaneComponent({
           Select a chat to start messaging
         </Typography>
       )}
-        {
-            isMobile ? 
-            <Box sx={{backgroundColor: "#06061f",position:"fixed",top:0,width:"100%",zIndex:10000000,p:2,display:"flex",alignItems:"center"}}>
-                <ArrowBackIcon onClick={()=>setChatId(null)} sx={{fontSize:30,ml:2}} />
-                
-                    
-                    <Avatar
-                    sx={{
-                      width: 40,
-                      height: 40,
-                      ml:2
-                    }}
-                  >
-                    {chatDetail[0]?.sender?.name === null
-                      ? "NA"
-                      : chatDetail[0]?.sender?.name?.slice(0, 1)}
-                  </Avatar>
-                  <Typography sx={{color:"white",ml:2, fontSize:18}}>{chatDetail[0]?.sender?.name !== null ? chatDetail[0]?.sender?.name : "No Name"}</Typography>
-                
-            </Box>
-            :null
-        }
+      {isMobile ? (
+        <Box
+          sx={{
+            backgroundColor:themeMode === "light" ? "lightgray" : "#06061f",
+            position: "fixed",
+            top: 0,
+            width: "100%",
+            zIndex: 10000000,
+            p: 2,
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <ArrowBackIcon
+            onClick={() => setChatId(null)}
+            sx={{ fontSize: 30, ml: 2 }}
+          />
+
+          <Avatar
+            sx={{
+              width: 40,
+              height: 40,
+              ml: 2,
+            }}
+          >
+            {chatDetail[0]?.sender?.name === null
+              ? "NA"
+              : chatDetail[0]?.sender?.name?.slice(0, 1)}
+          </Avatar>
+          <Typography sx={{ color: "white", ml: 2, fontSize: 18 }}>
+            {chatDetail[0]?.sender?.name !== null
+              ? chatDetail[0]?.sender?.name
+              : "No Name"}
+          </Typography>
+        </Box>
+      ) : null}
       <div
         ref={chatContainerRef}
         style={{
           position: isMobile ? "unset" : "absolute",
           width: "100%",
           padding: "0px",
-          backgroundColor: "#06061f",
+          background: themeMode === "light" ? "white" : "#06061f",
+          color: themeMode === "light" ? "black" : "white",
           overflowY: "auto",
           height: "100%",
           bottom: 0,
-          scrollBehavior: "smooth"
+          scrollBehavior: "smooth",
         }}
       >
         {chatId

@@ -25,6 +25,7 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import SettingsIcon from "@mui/icons-material/Settings";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { ThemeContext } from "./ThemeContext";
+import Brightness3Icon from '@mui/icons-material/Brightness3';
 
 export default function DrawerList({ anchor }: { anchor: "left" }) {
   const [ListOpen, setOpen] = React.useState(false);
@@ -36,7 +37,12 @@ export default function DrawerList({ anchor }: { anchor: "left" }) {
   };
   return (
     <Box
-      sx={{ width: 280, backgroundColor: "#06061f", height: "100%" }}
+      sx={{
+        width: 280,
+        backgroundColor: themeMode === "light" ? "white" : "#06061f",
+        color: themeMode === "light" ? "black" : "white",
+        height: "100%",
+      }}
       role="presentation"
     >
       <List
@@ -49,12 +55,24 @@ export default function DrawerList({ anchor }: { anchor: "left" }) {
           pl: 2,
         }}
       >
-        <Avatar sx={{ bgcolor: "#428ced", p: 2, color: "white" }}>TH</Avatar>
+        <Avatar
+          sx={{
+            bgcolor: "#428ced",
+            p: 2,
+            color: themeMode === "light" ? "black" : "white",
+          }}
+        >
+          TH
+        </Avatar>
         <IconButton>
-          <LightModeIcon
+          
+          {
+            themeMode === "light" ? <Brightness3Icon onClick={toggleTheme}
+            sx={{ color: "white", fontSize: 30 }} /> :<LightModeIcon
             onClick={toggleTheme}
             sx={{ color: "white", fontSize: 30 }}
           />
+          }
         </IconButton>
       </List>
 
@@ -73,17 +91,24 @@ export default function DrawerList({ anchor }: { anchor: "left" }) {
           {ListOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
       </List>
-      <List sx={{ color: "white" }}>
+
+      <List sx={{ color: themeMode === "light" ? "black" : "white" }}>
         <Collapse in={ListOpen} timeout="auto" unmountOnExit>
           <List
-            sx={{ backgroundColor: "#06061f" }}
+            sx={{
+              backgroundColor: themeMode === "light" ? "white" : "#06061f",
+            }}
             component="div"
             disablePadding
           >
             <ListItemButton sx={{ pl: 4 }}>
               <Avatar
                 sizes="small"
-                sx={{ bgcolor: "#1ca325", mr: 3, color: "white" }}
+                sx={{
+                  bgcolor: "#1ca325",
+                  mr: 3,
+                  color: themeMode === "light" ? "black" : "white",
+                }}
               >
                 TH
               </Avatar>
@@ -98,7 +123,7 @@ export default function DrawerList({ anchor }: { anchor: "left" }) {
         </Collapse>
       </List>
       {/* <Divider /> */}
-      <List sx={{ color: "white" }}>
+      <List sx={{ color: themeMode === "light" ? "black" : "white" }}>
         {[
           "My Profile",
           "New Group",
@@ -113,17 +138,45 @@ export default function DrawerList({ anchor }: { anchor: "left" }) {
             <ListItemButton>
               <ListItemIcon>
                 {index === 0 ? (
-                  <AccountCircleIcon sx={{ color: "white" }} />
+                  <AccountCircleIcon
+                    sx={{ color: themeMode === "light" ? "black" : "white" }}
+                  />
                 ) : null}
-                {index === 1 ? <GroupIcon sx={{ color: "white" }} /> : null}
+                {index === 1 ? (
+                  <GroupIcon
+                    sx={{ color: themeMode === "light" ? "black" : "white" }}
+                  />
+                ) : null}
                 {index === 2 ? (
-                  <ContactPageIcon sx={{ color: "white" }} />
+                  <ContactPageIcon
+                    sx={{ color: themeMode === "light" ? "black" : "white" }}
+                  />
                 ) : null}
-                {index === 3 ? <CallIcon sx={{ color: "white" }} /> : null}
-                {index === 4 ? <RunCircleIcon sx={{ color: "white" }} /> : null}
-                {index === 5 ? <BookmarkIcon sx={{ color: "white" }} /> : null}
-                {index === 6 ? <SettingsIcon sx={{ color: "white" }} /> : null}
-                {index === 7 ? <GroupAddIcon sx={{ color: "white" }} /> : null}
+                {index === 3 ? (
+                  <CallIcon
+                    sx={{ color: themeMode === "light" ? "black" : "white" }}
+                  />
+                ) : null}
+                {index === 4 ? (
+                  <RunCircleIcon
+                    sx={{ color: themeMode === "light" ? "black" : "white" }}
+                  />
+                ) : null}
+                {index === 5 ? (
+                  <BookmarkIcon
+                    sx={{ color: themeMode === "light" ? "black" : "white" }}
+                  />
+                ) : null}
+                {index === 6 ? (
+                  <SettingsIcon
+                    sx={{ color: themeMode === "light" ? "black" : "white" }}
+                  />
+                ) : null}
+                {index === 7 ? (
+                  <GroupAddIcon
+                    sx={{ color: themeMode === "light" ? "black" : "white" }}
+                  />
+                ) : null}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
