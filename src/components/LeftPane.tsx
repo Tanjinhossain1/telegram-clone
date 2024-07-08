@@ -5,6 +5,8 @@ import {
   Grid,
   IconButton,
   SwipeableDrawer,
+  Tab,
+  Tabs,
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -14,7 +16,13 @@ import SearchField from "./SearchField";
 import axios from "axios";
 import { formatTime } from "@/utils/DateFormator";
 
-export default function LeftPaneComponent() {
+export default function LeftPaneComponent({
+  chatId,
+  setChatId,
+}: {
+  chatId: number | null;
+  setChatId: any;
+}) {
   const [chats, setChats] = useState<any>([]);
   const [page, setPage] = useState<number>(1);
   const pageRef = useRef<number>(0);
@@ -32,7 +40,7 @@ export default function LeftPaneComponent() {
   const fetchInitialChats = async (page: number) => {
     try {
       const response = await axios.get(
-        `https://devapi.beyondchats.com/api/get_all_chats?page=${page}`
+        `${process.env.NEXT_PUBLIC_SERVER_URL_FOR_GET_ALL}?page=${page}`
       );
       console.log("Initial data fetched", response.data);
       if (page === 1) {
@@ -83,7 +91,7 @@ export default function LeftPaneComponent() {
     console.log("load more chats called");
     axios
       .get(
-        `https://devapi.beyondchats.com/api/get_all_chats?page=${pageRef.current}`
+        `${process.env.NEXT_PUBLIC_SERVER_URL_FOR_GET_ALL}?page=${pageRef.current}`
       )
       .then((response) => {
         console.log("get  fetching data for more", response.data);
@@ -155,7 +163,6 @@ export default function LeftPaneComponent() {
             <SearchField />
           </div>
         </div>
-
         <div
           style={{
             margin: "0px",
@@ -165,72 +172,81 @@ export default function LeftPaneComponent() {
           }}
         >
           {chats
-            ? chats?.map((chat: any, index: number) => {
-                return (
-                  <Fragment key={chat.id}>
-                    <Grid
-                      sx={{
-                        py: 1,
-                        ":hover": { bgcolor: "#15152e" },
-                        paddingLeft: "20px",
+            ? chats?.map((chat: any, index: number) => (
+                <Fragment key={chat.id}>
+                  <Grid
+                  onClick={()=>setChatId(chat?.id)}
+                    sx={{
+                      py: 1,
+                      ":hover": {
+                        bgcolor:chatId === chat?.id ?"": "rgba(173, 216, 230, 0.05)",
+                      },
+                      bgcolor: chatId === chat?.id ? "rgba(173, 216, 230, 0.2) " : "" ,
+                      paddingLeft: "20px",
+                      width: "100%",
+                      display: "flex",
+                      mt: 1,
+                    }}
+                  >
+                    <Avatar sx={{ width: 56, height: 56 }}>
+                      {chat?.creator?.name === ""
+                        ? "No Name"
+                        : chat?.creator?.name?.slice(0, 1)}
+                    </Avatar>
+                    <div
+                      style={{
                         display: "flex",
-                        mt: 1,
+                        justifyContent: "space-between",
+                        width: "80%",
+                        marginLeft: "20px",
                       }}
                     >
-                      <Avatar sx={{ width: 56, height: 56 }}>
-                        {chat?.creator?.name === ""
-                          ? "No Name"
-                          : chat?.creator?.name?.slice(0, 1)}
-                      </Avatar>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "80%",
-                          marginLeft: "20px",
-                        }}
-                      >
-                        <div>
-                          <Typography
-                            sx={{
-                              mt: 1,
-                            }}
-                          >
-                            {" "}
-                            {chat?.creator?.name === null
-                              ? "No Name"
-                              : chat?.creator?.name}
-                          </Typography>
-                          <Typography sx={{ fontSize: 13 }}>
-                            {chat?.status}
-                          </Typography>
-                        </div>
-                        <div>
-                          {" "}
-                          <Typography
-                            sx={{
-                              mt: 1,
-                            }}
-                          >
-                            {formatTime(chat?.created_at)}
-                          </Typography>
-                          <Typography
-                            sx={{
-                             
-                              textAlign:"end",
-                               fontSize:14,
-                               mt:0.5
-                              // width: "30",
-                            }}
-                          >
-                            <span style={{backgroundColor: "#0079ad",padding:'10px',paddingTop:"5px",paddingBottom:"5px", borderRadius: "50px",}}>{chat?.msg_count}</span>
-                          </Typography>
-                        </div>
+                      <div>
+                        <Typography
+                          sx={{
+                            mt: 1,
+                          }}
+                        >
+                          {chat?.creator?.name === null
+                            ? "No Name"
+                            : chat?.creator?.name}
+                        </Typography>
+                        <Typography sx={{ fontSize: 13 }}>
+                          {chat?.status}
+                        </Typography>
                       </div>
-                    </Grid>
-                  </Fragment>
-                );
-              })
+                      <div>
+                        <Typography
+                          sx={{
+                            mt: 1,
+                          }}
+                        >
+                          {formatTime(chat?.created_at)}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            textAlign: "end",
+                            fontSize: 14,
+                            mt: 0.5,
+                          }}
+                        >
+                          <span
+                            style={{
+                              backgroundColor: "#0079ad",
+                              padding: "10px",
+                              paddingTop: "5px",
+                              paddingBottom: "5px",
+                              borderRadius: "50px",
+                            }}
+                          >
+                            {chat?.msg_count}
+                          </span>
+                        </Typography>
+                      </div>
+                    </div>
+                  </Grid>
+                </Fragment>
+              ))
             : null}
           <div ref={observerTarget}></div>
           <Typography sx={{ color: "white", textAlign: "center", mt: 1 }}>
