@@ -6,3 +6,4 @@ live link:  <a href="https://telegram-clone-gamma.vercel.app/" target="_blank" >
 3. make width hidth big and small left list and right details
 4. show all messages
 5. try to make ui user friendly and a dragable menu
+6. also have infinit scroling
