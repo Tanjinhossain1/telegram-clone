@@ -1,21 +1,15 @@
+import ParentPageComponent from "@/components/ParentPageComponent";
 import SplitPaneComponent from "@/components/SplitPane";
 import { Grid } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
  
-export default async function Home({ searchParams }:{ searchParams:{page:string} }) {
+export default async function Home() {
    
   return (
     <>
       <Grid sx={{m:0,p:0}} container>
-          <SplitPaneComponent  />
-        {/* <Grid sx={{ display: { xs: "none", md: "block" } }} xs={12}>
-          {" "}
-        </Grid>
-        <Grid sx={{ display: { xs: "block", md: "none" } }} xs={12}>
-          {" "}
-          dsfsdf
-        </Grid> */}
+          <ParentPageComponent />
       </Grid>
     </>
   );

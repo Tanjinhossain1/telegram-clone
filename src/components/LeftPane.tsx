@@ -175,13 +175,17 @@ export default function LeftPaneComponent({
             ? chats?.map((chat: any, index: number) => (
                 <Fragment key={chat.id}>
                   <Grid
-                  onClick={()=>setChatId(chat?.id)}
+                    onClick={() => setChatId(chat?.id)}
                     sx={{
                       py: 1,
                       ":hover": {
-                        bgcolor:chatId === chat?.id ?"": "rgba(173, 216, 230, 0.05)",
+                        bgcolor:
+                          chatId === chat?.id
+                            ? ""
+                            : "rgba(173, 216, 230, 0.05)",
                       },
-                      bgcolor: chatId === chat?.id ? "rgba(173, 216, 230, 0.2) " : "" ,
+                      bgcolor:
+                        chatId === chat?.id ? "rgba(173, 216, 230, 0.2) " : "",
                       paddingLeft: "20px",
                       width: "100%",
                       display: "flex",
@@ -215,7 +219,10 @@ export default function LeftPaneComponent({
                           {chat?.status}
                         </Typography>
                       </div>
-                      <div>
+                      <Grid sx={{marginRight:{
+                        xs:"10px",
+                        lg:"0px"
+                      }}}>
                         <Typography
                           sx={{
                             mt: 1,
@@ -242,7 +249,7 @@ export default function LeftPaneComponent({
                             {chat?.msg_count}
                           </span>
                         </Typography>
-                      </div>
+                      </Grid>
                     </div>
                   </Grid>
                 </Fragment>
