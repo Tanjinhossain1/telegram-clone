@@ -16,14 +16,26 @@ export default function ParentPageComponent() {
         <Grid sx={{ display: { xs: "none", md: "block" } }} xs={12}>
           <SplitPaneComponent />
         </Grid>
-        <Grid className={`app-container ${themeMode !== "light" ? 'night-mode' : 'day-mode'}`} sx={{ display: { xs: "block", md: "none" },color:themeMode === "light" ? "black" : "white",position:'relative'}} xs={12}>
-          {
-            chatId ? 
-            <RightPaneComponent setChatId={setChatId} isMobile chatId={chatId} /> :
-
+        <Grid
+          className={`app-container ${
+            themeMode !== "light" ? "night-mode" : "day-mode"
+          }`}
+          sx={{
+            display: { xs: "block", md: "none" },
+            color: themeMode === "light" ? "black" : "white",
+            position: "relative",
+          }}
+          xs={12}
+        >
+          {chatId ? (
+            <RightPaneComponent
+              setChatId={setChatId}
+              isMobile
+              chatId={chatId}
+            />
+          ) : (
             <LeftPaneComponent chatId={chatId} setChatId={setChatId} />
-            
-          }
+          )}
         </Grid>
       </Grid>
     </>

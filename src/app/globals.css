@@ -47,10 +47,12 @@ body, html {
 
 .day-mode {
   background-color: white;
+  color:"white"
 }
 
 .night-mode {
   background-color: black;
+  color:"white"
 }
 
 .app-container::after {

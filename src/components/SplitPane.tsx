@@ -58,6 +58,7 @@ export default function SplitPaneComponent() {
               sx={{
                 ...layoutCSSLeft,
                 background:  themeMode === "light" ? "white" : "#1A2A3A",
+                color:  themeMode === "light" ? "black" : "white",
                 transition: "background-color 0.5s, color 0.5s",
                 borderRight: "2px solid #0d0d1a",
                 margin: "0px",
