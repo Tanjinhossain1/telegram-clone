@@ -50,7 +50,7 @@ const parseMessage = (message: any) => {
     return part;
   });
 };
-export default function SplitPaneComponent() {
+export default function RightPaneComponent() {
   const [sizes, setSizes] = useState([200, "30%", "auto"]);
 
   const [chatId, setChatId] = useState<number | null>(null);
